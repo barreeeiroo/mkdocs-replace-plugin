@@ -47,16 +47,7 @@ class ReplacePlugin(BasePlugin):
                 except KeyError:
                     logging.error('Meta data not found: %s' % (meta_name))
 
-            elif name.startswith('page.'):
-                try:
-                    requested_page_data = str(name.split('.')[1])
-                    required_page_data = str(page.meta[requested_page_data])
-                    if not required_page_data or not isinstance(required_page_data, str):
-                        logging.error('Unsupported page data type. \
-                                       Received %s : %s' % (requested_page_data, required_page_data))
-                        continue
-                    html = html.replace(('{{ page.%s }}' % requested_page_data), required_page_data)
-                except KeyError:
-                    logging.error('Page data not found: %s' % (requested_page_data))
+            elif name.startswith('page.title'):
+                html = html.replace(('{{ page.title }}'), page.title)
 
         return html
