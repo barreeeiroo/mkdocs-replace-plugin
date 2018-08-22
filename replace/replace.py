@@ -35,7 +35,6 @@ class ReplacePlugin(BasePlugin):
 
         for match in match_iter:
             name = match.group('name')
-            print(name)
             if name.startswith('meta.'):
                 try:
                     meta_name = str(name.split('.')[1])
@@ -48,7 +47,17 @@ class ReplacePlugin(BasePlugin):
                 except KeyError:
                     logging.error('Meta data not found: %s' % (meta_name))
 
-            elif name.startswith('page.title'):
-                html = html.replace(('{{ page.title }}'), page.title)
+            elif name.startswith('page.'):
+                print(name)
+                try:
+                    meta_name = str(name.split('.')[1])
+                    required_meta_data = str(page.meta_name)
+                    if not required_meta_data or not isinstance(required_meta_data, str):
+                        logging.error('Unsupported page data type. \
+                                       Received %s : %s' % (meta_name, required_meta_data))
+                        continue
+                    html = html.replace(('{{ page.%s }}' % meta_name), required_meta_data)
+                except KeyError:
+                    logging.error('Page data not found: %s' % (meta_name))
 
         return html
