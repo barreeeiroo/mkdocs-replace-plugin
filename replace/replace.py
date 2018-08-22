@@ -35,7 +35,7 @@ class ReplacePlugin(BasePlugin):
 
         for match in match_iter:
             name = match.group('name')
-            logging.info(name)
+            print(name)
             if name.startswith('meta.'):
                 try:
                     meta_name = str(name.split('.')[1])
