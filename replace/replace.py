@@ -61,4 +61,5 @@ class ReplacePlugin(BasePlugin):
                 except KeyError:
                     logging.error('Page data not found: %s' % (page_name))
 
+            logging.info(name)
         return html
