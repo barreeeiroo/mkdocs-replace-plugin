@@ -50,8 +50,7 @@ class ReplacePlugin(BasePlugin):
             elif name.startswith('page.'):
                 try:
                     page_name = str(name.split('.')[1])
-                    page.page_name = page_name
-                    required_page_data = str(page.page_name)
+                    required_page_data = str(getattr(page,page_name))
                     if not required_page_data or not isinstance(required_page_data, str):
                         logging.error('Unsupported page data type. \
                                        Received %s : %s' % (page_name, required_page_data))
