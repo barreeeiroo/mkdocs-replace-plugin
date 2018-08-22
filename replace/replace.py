@@ -49,14 +49,14 @@ class ReplacePlugin(BasePlugin):
 
             elif name.startswith('page.'):
                 try:
-                    meta_name = str(name.split('.')[1])
-                    required_meta_data = str(page.[meta_name])
-                    if not required_meta_data or not isinstance(required_meta_data, str):
+                    page.page_name = str(name.split('.')[1])
+                    required_page_data = str(page.page_name)
+                    if not required_page_data or not isinstance(required_page_data, str):
                         logging.error('Unsupported page data type. \
-                                       Received %s : %s' % (meta_name, required_meta_data))
+                                       Received %s : %s' % (page_name, required_page_data))
                         continue
-                    html = html.replace(('{{ page.%s }}' % meta_name), required_meta_data)
+                    html = html.replace(('{{ page.%s }}' % page_name), required_page_data)
                 except KeyError:
-                    logging.error('Page data not found: %s' % (meta_name))
+                    logging.error('Page data not found: %s' % (page_name))
 
         return html
