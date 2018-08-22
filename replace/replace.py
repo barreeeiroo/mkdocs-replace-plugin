@@ -51,6 +51,8 @@ class ReplacePlugin(BasePlugin):
                 try:
                     page_name = str(name.split('.')[1])
                     required_page_data = str(page.page_name)
+                    logging.info(page_name)
+                    logging.info(required_page_data)
                     if not required_page_data or not isinstance(required_page_data, str):
                         logging.error('Unsupported page data type. \
                                        Received %s : %s' % (page_name, required_page_data))
