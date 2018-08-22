@@ -49,17 +49,14 @@ class ReplacePlugin(BasePlugin):
 
             elif name.startswith('page.'):
                 try:
-                    page_name = str(name.split('.')[1])
-                    required_page_data = str(page.page_name)
-                    logging.info(page_name)
-                    logging.info(required_page_data)
+                    requested_page_data = str(name.split('.')[1])
+                    required_page_data = str(page.requested_page_data)
                     if not required_page_data or not isinstance(required_page_data, str):
                         logging.error('Unsupported page data type. \
-                                       Received %s : %s' % (page_name, required_page_data))
+                                       Received %s : %s' % (requested_page_data, required_page_data))
                         continue
-                    html = html.replace(('{{ page.%s }}' % page_name), required_page_data)
+                    html = html.replace(('{{ page.%s }}' % requested_page_data), required_page_data)
                 except KeyError:
-                    logging.error('Page data not found: %s' % (page_name))
+                    logging.error('Page data not found: %s' % (requested_page_data))
 
-            logging.info(name)
         return html
