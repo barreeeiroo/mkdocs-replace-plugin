@@ -5,9 +5,6 @@ from mkdocs.plugins import BasePlugin
 # Regex for detecting text of format: {{ anytext }}
 MATCH_REGEX = r"\{\{ (?P<name>.*) \}\}"
 
-# TODO: Allow more general replacements, maybe from a file,
-#       Allow using `page` variables
-
 
 class ReplacePlugin(BasePlugin):
     """ A plugin for MkDocs to replace the meta vars from inside the markdown without
@@ -47,8 +44,19 @@ class ReplacePlugin(BasePlugin):
                                        Received %s : %s' % (meta_name, required_meta_data))
                         continue
                     html = html.replace(('{{ meta.%s }}' % meta_name), required_meta_data)
-
                 except KeyError:
                     logging.error('Meta data not found: %s' % (meta_name))
+
+            elif name.startswith('page.'):
+                try:
+                    page_name = str(name.split('.')[1])
+                    required_page_data = str(page.page_name)
+                    if not required_page_data or not isinstance(required_page_data, str):
+                        logging.error('Unsupported page data type. \
+                                       Received %s : %s' % (page_name, required_page_data))
+                        continue
+                    html = html.replace(('{{ page.%s }}' % page_name), required_page_data)
+                except KeyError:
+                    logging.error('Page data not found: %s' % (page_name))
 
         return html
