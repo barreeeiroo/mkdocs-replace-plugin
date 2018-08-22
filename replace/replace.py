@@ -51,7 +51,7 @@ class ReplacePlugin(BasePlugin):
                 print(name)
                 try:
                     meta_name = str(name.split('.')[1])
-                    required_meta_data = str(page.meta_name)
+                    required_meta_data = str(page.title)
                     if not required_meta_data or not isinstance(required_meta_data, str):
                         logging.error('Unsupported page data type. \
                                        Received %s : %s' % (meta_name, required_meta_data))
